@@ -1,0 +1,17 @@
+def is_ordered_rec(head,LTH = True):
+    if head.next == None or head == None:
+        return None
+
+    if head.next.next == None:
+        if head.data < head.next.data:
+            return True
+        return 
+
+
+
+
+print(is_ordered(SLL_Node(1)))
+print(is_ordered(SLL_Node(1,SLL_Node(2,SLL_Node(3)))))
+print(is_ordered(SLL_Node(1,SLL_Node(3,SLL_Node(2)))))
+print(is_ordered_rec(SLL_Node(3,SLL_Node(2,SLL_Node(1)))))
+
