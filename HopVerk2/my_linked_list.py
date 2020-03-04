@@ -50,7 +50,7 @@ class LinkedList:
             self.size -= 1
             return return_value
 
-    def push_back(self, value):
+    def push_back(self, value): # Done
         ''' Function that adds a value to the front of the list '''
         if self.size == 0:
             self._set_for_first(value)
@@ -60,7 +60,7 @@ class LinkedList:
             self.tail = new_tail # Assign the new tail
         self.size += 1
 
-    def push_front(self, value):
+    def push_front(self, value): # Done
         ''' Function that adds a value to the back of the list '''
         if self.size == 0:
             self._set_for_first(value)
