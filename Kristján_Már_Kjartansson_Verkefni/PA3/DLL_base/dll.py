@@ -32,13 +32,13 @@ class DLL(Node):
 
     def insert(self, value):
         '''Inserts given value to the front of current position'''
-        self.size += 1
         if self.current:
             new_node = Node(value, self.current, self.current.next)
             self.current.next = new_node
             self.current = new_node
         else:
             self.current = Node(value)
+        self.size += 1
 
         if self.size == 1:
             self.head = self.current    # Set Head
@@ -51,25 +51,27 @@ class DLL(Node):
 
     def remove(self):
         '''Removes current position's value'''
-        self.size -= 1
-
-        if self.size < 0:
+        if self.size <= 0:
             self.size = 0
             return None
-        else:
-            if self.current.next == None:
-                pass
-            elif self.current.prev == None:
-                pass
-            else:
-                self.current.next.prev = self.current.prev
-                self.current.prev.next = self.current.next
-             self.current = self.current.prev
 
-        if self.current.next == None:
-            self.tail = self.current
-        elif self.current.prev == None:
+        if self.current.next == None and self.current.prev == None: # If we remove only one value
+            self.current = None
+            self.head = None
+            self.tail = None
+        elif self.current == self.head: # If current is head
+            self.current = self.head.next
+            self.current.prev = None
             self.head = self.current
+        elif self.current == self.tail: # If current is tail
+            self.current = self.tail.prev
+            self.current.next = None
+            self.tail = self.current
+        else:
+            self.current.next.prev = self.current.prev
+            self.current.prev.next = self.current.next
+            self.current = self.current.prev
+        self.size -= 1
 
     def get_value(self):
         '''Gets the value of current position'''
@@ -90,6 +92,11 @@ class DLL(Node):
 
     def move_to_pos(self, position):
         '''Sets current position to given position'''
+        if position < 0:
+            position = self.size
+        elif position > self.size:
+            position = self.size
+
         node_at = self.head
         for _ in range(position - 1):
             node_at = node_at.next
@@ -101,9 +108,7 @@ class DLL(Node):
         while N:
             self.current = N
             if N.data == value:
-                N_temp = N.next # Save N
                 self.remove()   # Remove N
-                N = N_temp.next # Veiw next N
             N = N.next
         self.current = self.head
 
@@ -115,6 +120,6 @@ class DLL(Node):
             N.next = N.prev
             N.prev = N_temp
             N = N_temp
-
-    def sort(self):
-        pass
+        temp_head = self.head
+        self.head = self.tail
+        self.tail = temp_head
